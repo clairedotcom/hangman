@@ -1,13 +1,19 @@
 require_relative 'game.rb'
-require_relative 'dictionary.rb'
 require 'json'
 
-dictionary = Dictionary.new
 game = Game.new
-
-word = dictionary.set_word
 game.welcome_dialogue
-game.play_game(word)
+
+answer = gets.chomp.downcase
+if answer == "y"
+    saved_game = JSON::load()
+end    
+
+game.game_instructions
+
+until game.game_over? do 
+    game.turn
+end
 
 
 
