@@ -1,10 +1,13 @@
 class Game
+    attr_reader :save_game
+    
     def initialize
         @letters_guessed = Array.new
         @word = set_word
         @guess = Array.new(@word.length,"-")
         @count = 12
-    end    
+        @save_game = false
+    end
     
     def welcome_dialogue
         print "Welcome to hangman!\n"
@@ -36,7 +39,13 @@ class Game
     end
     
     def turn
+        @save_game = false
         user_input = solicit_guess
+
+        if user_input == "save"
+            @save_game = true
+        end    
+
         @letters_guessed.push(user_input)
 
         if @word.include? user_input        
@@ -61,5 +70,14 @@ class Game
             puts "You win!!" 
             true
         end
-    end    
+    end
+    
+    def to_json
+        JSON.dump ({
+            :letters_guessed => @letters_guessed,
+            :word => @word,
+            :guess => @guess,
+            :count => @count
+        })
+    end
 end

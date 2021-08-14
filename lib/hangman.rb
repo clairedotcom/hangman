@@ -12,8 +12,21 @@ end
 game.game_instructions
 
 until game.game_over? do 
+    if game.save_game
+        puts game.to_json
+    end
+
     game.turn
 end
+
+def serialize_game
+    filename = gets.chomp
+    puts game.to_json
+end
+
+   
+
+
 
 
 
