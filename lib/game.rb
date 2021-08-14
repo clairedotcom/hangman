@@ -1,5 +1,5 @@
 class Game
-    attr_reader :save_game
+    attr_reader :letters_guessed,:word,:guess,:count,:save_game
     
     def initialize
         @letters_guessed = Array.new
@@ -56,14 +56,16 @@ class Game
             end        
         end
 
+        @count -= 1
+
         puts "You have already guessed: #{@letters_guessed.join}"
-        puts "You have #{@count-@letters_guessed.length} guesses remaining."
+        puts "You have #{12-@letters_guessed.length} guesses remaining."
         puts @guess.join
     end    
 
     def game_over?
-        if @letters_guessed.length == @count
-            puts "You've guessed #{@count} times. You lose!"
+        if @count == 0
+            puts "You're out of guesses. You lose!"
             puts "The word was #{@word.join}."
             true
         elsif @guess == @word
@@ -72,12 +74,22 @@ class Game
         end
     end
     
-    def to_json
-        JSON.dump ({
-            :letters_guessed => @letters_guessed,
-            :word => @word,
-            :guess => @guess,
-            :count => @count
-        })
+    def to_hash
+        {:letters_guessed => @letters_guessed,
+        :word => @word,
+        :guess => @guess,
+        :count => @count,
+        :save_game => @save_game
+        }
     end
+
+    def hash_to_game(hash)
+        @letters_guessed = hash["letters_guessed"]
+        @word = hash["word"]
+        @guess = hash["guess"]
+        @count = hash["count"]
+        @save_game = hash["save_game"]
+    end    
+
+
 end
