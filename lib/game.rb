@@ -11,7 +11,7 @@ class Game
     
     def welcome_dialogue
         print "Welcome to hangman!\n"
-        print "Would you like to load a saved game?\n"
+        print "Would you like to load your saved game?\n"
         print "Enter 'y' or 'n': "
     end
 
@@ -44,6 +44,7 @@ class Game
 
         if user_input == "save"
             @save_game = true
+            return
         end    
 
         @letters_guessed.push(user_input)
@@ -89,7 +90,9 @@ class Game
         @guess = hash["guess"]
         @count = hash["count"]
         @save_game = hash["save_game"]
-    end    
-
-
+    end
+    
+    def reset_game
+        @save_game = false
+    end 
 end
